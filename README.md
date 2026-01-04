@@ -1,17 +1,17 @@
-# 🤖 AI_Agent
+AI_Agent
 
 A Python-based AI Agent project designed to experiment with autonomous agents powered by Large Language Models (LLMs) and external tools.
 
----
 
-## 🚀 Project Overview
+
+Project Overview
 
 **AI_Agent** is a lightweight framework for building and running an AI agent capable of executing tasks, making decisions, and interacting with tools programmatically.  
 The project is structured for simplicity and extensibility, making it ideal for learning, experimentation, and prototyping AI agents.
 
----
 
-## 🗂 Repository Structure
+
+🗂 Repository Structure
 
 ```
 AI_Agent/
@@ -22,18 +22,18 @@ AI_Agent/
 └── README.md                 # Project documentation
 ```
 
----
 
-## 🔧 Installation & Setup
 
-### 1. Clone the repository
+Installation & Setup
+
+1. Clone the repository
 
 ```bash
 git clone https://github.com/SurabhiDeb/AI_Agent.git
 cd AI_Agent
 ```
 
-### 2. Create a virtual environment (recommended)
+2. Create a virtual environment (recommended)
 
 ```bash
 python -m venv venv
@@ -41,7 +41,7 @@ source venv/bin/activate      # macOS/Linux
 venv\Scripts\activate       # Windows
 ```
 
-### 3. Install dependencies
+3. Install dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -49,7 +49,7 @@ pip install -r requirements.txt
 
 ---
 
-## ⚙️ Environment Configuration
+Environment Configuration
 
 Create a `.env` file in the project root to store API keys or secrets.
 
@@ -63,7 +63,7 @@ Adjust the variables based on your integrations.
 
 ---
 
-## ▶️ Running the Agent
+Running the Agent
 
 Once setup is complete, run:
 
@@ -75,7 +75,7 @@ This will initialize and execute the AI agent according to the logic defined in 
 
 ---
 
-## 🧰 Tools Module
+Tools Module
 
 The `tools.py` file contains helper functions and integrations used by the AI agent.
 You can extend this file to:
@@ -85,7 +85,7 @@ You can extend this file to:
 
 ---
 
-## 📦 Dependencies
+Dependencies
 
 All required packages are listed in `requirements.txt`.  
 Typical dependencies for AI agent projects include:
@@ -95,22 +95,10 @@ Typical dependencies for AI agent projects include:
 
 ---
 
-## 🛠 Future Improvements
+Future Improvements
 
 - Multi-agent support
 - Persistent memory (vector databases)
 - Tool chaining & planning
 - Logging and monitoring
 
----
-
-## 📄 License
-
-This project is open-source. Add a license file to define usage and distribution terms.
-
----
-
-## 🙌 Author
-
-Created by **Surabhi Deb**  
-GitHub: https://github.com/SurabhiDeb
