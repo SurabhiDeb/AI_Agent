@@ -11,7 +11,7 @@ The project is structured for simplicity and extensibility, making it ideal for 
 
 
 
-🗂 Repository Structure
+Repository Structure
 
 ```
 AI_Agent/
