@@ -1,104 +1,140 @@
-AI_Agent
+# AI Research Agent
 
-A Python-based AI Agent project designed to experiment with autonomous agents powered by Large Language Models (LLMs) and external tools.
+A Python-based autonomous research agent powered by Claude (Anthropic) and LangChain. Given a natural language query, the agent reasons about which tools to use, retrieves information from multiple sources, and returns a structured research output — automatically.
 
+---
 
+## What it does
 
-Project Overview
+You ask a question. The agent figures out how to answer it.
 
-**AI_Agent** is a lightweight framework for building and running an AI agent capable of executing tasks, making decisions, and interacting with tools programmatically.  
-The project is structured for simplicity and extensibility, making it ideal for learning, experimentation, and prototyping AI agents.
+It searches the web, looks up Wikipedia, synthesizes the results, and saves a structured report — all without manual intervention. The output is always in a consistent, parseable format: topic, summary, sources, and tools used.
 
+**Example:**
 
+```
+What can I help you research? > What is the impact of AI on recruitment?
 
-Repository Structure
+ResearchResponse(
+  topic='AI impact on recruitment',
+  summary='AI is transforming recruitment by automating screening, reducing bias in CV parsing, and enabling conversational interview agents...',
+  sources=['https://...', 'https://...'],
+  tools_used=['search', 'wikipedia']
+)
+```
+
+---
+
+## Architecture
+
+```
+User query
+    ↓
+Agent (Claude claude-3-5-sonnet via LangChain)
+    ↓
+Tool selection & execution (autonomous)
+    ├── Web Search (DuckDuckGo)
+    ├── Wikipedia Lookup
+    └── File Save (research_output.txt)
+    ↓
+Structured output (Pydantic model)
+    ↓
+Parsed ResearchResponse
+```
+
+The agent uses a **tool-calling architecture** — the LLM decides which tools to invoke and in what order, based on the query. This is the same pattern used in production AI agent systems.
+
+---
+
+## Key design decisions
+
+**Separation of concerns** — the agent core (`main.py`) and tool definitions (`tools.py`) are kept separate. Adding a new tool means adding it to `tools.py` without touching the agent logic.
+
+**Structured output with Pydantic** — responses are parsed into a typed `ResearchResponse` model, making outputs consistent and programmatically usable rather than free-form text.
+
+**Prompt engineering** — the system prompt instructs the agent to always wrap output in the defined format, with no additional text. This enforces reliable structured responses in production-style usage.
+
+**Claude as the reasoning core** — uses `claude-3-5-sonnet-20241022` via LangChain's Anthropic integration for strong reasoning and instruction-following.
+
+---
+
+## Repository structure
 
 ```
 AI_Agent/
-├── .env                      # Environment variables (API keys, secrets)
-├── main.py                   # Entry point to run the AI agent
-├── tools.py                  # Helper functions and tool integrations
-├── requirements.txt          # Python dependencies
-└── README.md                 # Project documentation
+├── main.py           # Agent definition, prompt engineering, execution loop
+├── tools.py          # Tool definitions: search, Wikipedia, file save
+├── .env              # API keys (not committed)
+├── requirements.txt  # Dependencies
+└── README.md
 ```
 
+---
 
+## Setup
 
-Installation & Setup
-
-1. Clone the repository
-
+**1. Clone the repo**
 ```bash
 git clone https://github.com/SurabhiDeb/AI_Agent.git
 cd AI_Agent
 ```
 
-2. Create a virtual environment (recommended)
-
+**2. Create a virtual environment**
 ```bash
 python -m venv venv
 source venv/bin/activate      # macOS/Linux
-venv\Scripts\activate       # Windows
+venv\Scripts\activate         # Windows
 ```
 
-3. Install dependencies
-
+**3. Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
----
+**4. Configure environment variables**
 
-Environment Configuration
-
-Create a `.env` file in the project root to store API keys or secrets.
-
-Example:
-
+Create a `.env` file in the root directory:
 ```
-OPENAI_API_KEY=your_api_key_here
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
 ```
-
-Adjust the variables based on your integrations.
 
 ---
 
-Running the Agent
-
-Once setup is complete, run:
+## Running the agent
 
 ```bash
 python main.py
 ```
 
-This will initialize and execute the AI agent according to the logic defined in `main.py`.
+You will be prompted to enter a research question. The agent will autonomously search, retrieve, and return a structured response. Results are also saved to `research_output.txt`.
 
 ---
 
-Tools Module
+## Tools
 
-The `tools.py` file contains helper functions and integrations used by the AI agent.
-You can extend this file to:
-- Add new tools
-- Connect APIs
-- Implement custom logic for the agent
-
----
-
-Dependencies
-
-All required packages are listed in `requirements.txt`.  
-Typical dependencies for AI agent projects include:
-- LLM SDKs (e.g., OpenAI)
-- Environment variable managers
-- Utility libraries
+| Tool | Source | Purpose |
+|------|--------|---------|
+| `search` | DuckDuckGo | Real-time web search |
+| `wiki_tool` | Wikipedia API | Encyclopedic background information |
+| `save_text_to_file` | Local filesystem | Persists research output with timestamp |
 
 ---
 
-Future Improvements
+## Tech stack
 
-- Multi-agent support
-- Persistent memory (vector databases)
-- Tool chaining & planning
-- Logging and monitoring
+- [LangChain](https://www.langchain.com/) — agent orchestration and tool calling
+- [Anthropic Claude](https://www.anthropic.com/) — LLM reasoning core
+- [Pydantic](https://docs.pydantic.dev/) — structured output validation
+- [DuckDuckGo Search](https://pypi.org/project/duckduckgo-search/) — web search tool
+- [Wikipedia API](https://pypi.org/project/wikipedia/) — knowledge retrieval
 
+---
+
+## Planned improvements
+
+- [ ] Multi-agent support (planner + executor pattern)
+- [ ] Persistent memory with vector database (e.g. ChromaDB)
+- [ ] Tool chaining with intermediate reasoning steps exposed
+- [ ] Streamlit UI for non-technical users
+- [ ] Logging and monitoring for agent behavior analysis
+- [ ] Configurable agent personas and output formats
